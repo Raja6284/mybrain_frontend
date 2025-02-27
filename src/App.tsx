@@ -1,13 +1,16 @@
-import { Button } from "./components/ui/Button"
 
+import { Button } from "./components/Button"
+import { PlusIcon } from "./components/icons/PlusIcon"
+import { ShareIcon } from "./components/icons/ShareIcon"
+import Card from './components/Card';
 
 function App() {
   
   return (
     <>
-        <Button variant="primary" size="lg" text="Share"/>
-        <Button variant="secondary" size="md" text="Share"/>
-        <Button variant="primary" size='sm' text="Share"/>
+        <Button variant="primary" text="Add Content" startIcon={<PlusIcon/>}></Button>
+        <Button variant="secondary" text="Share" startIcon={<ShareIcon/>}></Button>
+        <Card/>
     </>
   )
 }

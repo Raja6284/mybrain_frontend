@@ -1,9 +1,8 @@
 
-export function PlusIcon(){
-
+export function ShareIcon(){
     return(
         <div>
-            ➕
+            👌
         </div>
     )
 }
