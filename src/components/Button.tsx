@@ -18,7 +18,7 @@ export function Button(props:buttonVariant){
     return (
         <div>
             <button className={`${colorVariant[props.variant]} ${defaultProperty} `}>
-                <div className="pr-0.5 ">
+                <div className="pr-1 ">
                 {props.startIcon}
                 </div>
                 {props.text}
