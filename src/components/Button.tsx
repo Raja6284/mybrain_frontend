@@ -3,7 +3,8 @@ import { ReactElement } from "react";
 interface buttonVariant{
     variant:"primary" | "secondary" ,
     text:string,
-    startIcon:ReactElement
+    startIcon?:ReactElement,
+    onClick?: () => void
 }
 
 const colorVariant ={
@@ -11,13 +12,15 @@ const colorVariant ={
     "secondary":"bg-purple-300 text-white"
 }
 
-const defaultProperty = "border-1 rounded px-3 py-2 flex items-center justify-center font-medium"
+const defaultProperty = "border-1 rounded px-3 py-2 flex items-center justify-center font-medium cursor-pointer"
 
 export function Button(props:buttonVariant){
      
     return (
         <div>
-            <button className={`${colorVariant[props.variant]} ${defaultProperty} `}>
+            <button
+                onClick={props.onClick}
+            className={`${colorVariant[props.variant]} ${defaultProperty} `}>
                 <div className="pr-1 ">
                 {props.startIcon}
                 </div>
