@@ -34,13 +34,17 @@ export function CreateContentModel({ open, onClose }) {
     )
 }
 
+interface inputProps{
+    placholder:string,
+    ref?:any
+}
 
 
-export function Input({ onChange, placeholder }: { onChange: () => void }) {
+export function Input({ reference, placeholder }: inputProps) {
 
     return (
         <div>
-            <input type={"text"} placeholder={placeholder} className="px-4 py-2 border rounded m-2" onChange={onChange} />
+            <input type={"text"} placeholder={placeholder} ref={reference} className="px-4 py-2 border rounded m-2"  />
         </div>
     )
 }
