@@ -4,8 +4,10 @@ interface buttonVariant{
     variant:"primary" | "secondary" ,
     text:string,
     startIcon?:ReactElement,
-    onClick?: () => void
+    onClick?: () => void,
 }
+
+
 
 const colorVariant ={
     "primary":"bg-purple-500 text-white",

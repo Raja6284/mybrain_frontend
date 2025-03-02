@@ -5,11 +5,13 @@ import { ShareIcon } from "../components/icons/ShareIcon"
 import Card from '../components/Card';
 import { CreateContentModel } from "../components/CreateContentModel";
 import { Sidebar } from "../components/Sidebar";
+import { useContent } from "./hooks/useContent";
 
 
 export default function Dashboard(){
     
     const [contentCreatePop, setContentCreatePop] = useState(false)
+    const contents =useContent()
 
   return (
     <>
@@ -28,16 +30,12 @@ export default function Dashboard(){
         </div>
 
         <div className="flex gap-2 mt-4">
-          <Card link="https://x.com/wyckoffweb/status/1895439430141329663" type="twitter" title="Boost your pi network mining" />
 
-          <Card link="https://www.youtube.com/watch?v=Ym4ti89tItw" type="youtube" title="Yung DSA song" />
-
-          <Card link="https://www.youtube.com/watch?v=SfsaNZJ08Xs" type="youtube" title="Trumb Vs Zelensky in White House" />
+          {contents.map(({link,type,title})=> <Card link={link} type={type} title={title} />)}
         </div>
       </div>
 
       </div>
-
 
     </>
   )
