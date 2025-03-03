@@ -33,6 +33,8 @@ export function CreateContentModel({ open, onClose }) {
             }
         })
 
+        onClose()
+
         alert("your content added")
     }
 
