@@ -8,6 +8,7 @@ import axios from 'axios';
 import { BACKEND_URL } from '../../config';
 import InstaIcon from './icons/Instagram';
 import { ReactElement } from 'react';
+import { TextIcon } from './icons/TextIcon';
 
 interface Content {
     _id: string;
@@ -33,7 +34,8 @@ interface Content {
 const iconMap: Record<string, ReactElement> = {
     "youtube": <YoutubeIcon />,
     "twitter": <TwitterIcon />,
-    "instagram": <InstaIcon />
+    "instagram": <InstaIcon />,
+    "text": <TextIcon/>
 }
 
 
