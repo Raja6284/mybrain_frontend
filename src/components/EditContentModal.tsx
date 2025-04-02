@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import type React from "react"
@@ -10,25 +8,21 @@ import { useRef, useState, useEffect } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "../../config"
 
-enum contentType {
-  Youtube = "youtube",
-  Twitter = "twitter",
-  LinkedIn = "linkedin",
-  Instagram = "instagram",
-  Document = "document",
-  Text = "text",
-  Image = "image",
-  Code = "code",
-  Email = "email",
-  RandomLink = "randomLink",
-}
 
-export function CreateContentModel({ open, onClose }) {
+export function EditContentModal({ open, onClose, content, onUpdate }) {
   const titleRef = useRef<HTMLInputElement>(null)
   const linkRef = useRef<HTMLInputElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
-  const [type, setType] = useState<contentType>()
   const [text, setText] = useState("")
+  
+  // Set initial values when modal opens with content
+  useEffect(() => {
+    if (content && open) {
+      if (content.text && text === "") {  // Only set if text is empty
+        setText(content.text)
+      }
+    }
+  }, [open]) 
 
   // Close modal when clicking outside
   useEffect(() => {
@@ -62,7 +56,7 @@ export function CreateContentModel({ open, onClose }) {
     }
   }, [open, onClose])
 
-  async function handleCreateContent() {
+  async function handleUpdateLinkContent() {
     const title = titleRef.current?.value
     const link = linkRef.current?.value
 
@@ -72,12 +66,11 @@ export function CreateContentModel({ open, onClose }) {
     }
 
     try {
-      await axios.post(
-        `${BACKEND_URL}/api/v1/content`,
+      const response = await axios.put(
+        `${BACKEND_URL}/api/v1/content/${content._id}`,
         {
           link: link,
           title: title,
-          type: type,
         },
         {
           headers: {
@@ -87,14 +80,15 @@ export function CreateContentModel({ open, onClose }) {
       )
 
       onClose()
-      alert("Your content was added successfully")
+      onUpdate(response.data)
+      alert("Your content was updated successfully")
     } catch (error) {
-      console.error("Error adding content:", error)
-      alert("Failed to add content. Please try again.")
+      console.error("Error updating content:", error)
+      alert("Failed to update content. Please try again.")
     }
   }
 
-  async function handleCreateTextOrCode() {
+  async function handleUpdateTextOrCode() {
     const title = titleRef.current?.value
 
     if (!title || !text.trim()) {
@@ -103,11 +97,10 @@ export function CreateContentModel({ open, onClose }) {
     }
 
     try {
-      await axios.post(
-        `${BACKEND_URL}/api/v1/content`,
+      const response = await axios.put(
+        `${BACKEND_URL}/api/v1/content/${content._id}`,
         {
           title: title,
-          type: type,
           text: text,
         },
         {
@@ -118,14 +111,15 @@ export function CreateContentModel({ open, onClose }) {
       )
 
       onClose()
-      alert("Your content was added successfully")
+      onUpdate(response.data)
+      alert("Your content was updated successfully")
     } catch (error) {
-      console.error("Error adding content:", error)
-      alert("Failed to add content. Please try again.")
+      console.error("Error updating content:", error)
+      alert("Failed to update content. Please try again.")
     }
   }
 
-  if (!open) return null
+  if (!open || !content) return null
 
   return (
     <div className="fixed inset-0 z-50">
@@ -160,7 +154,7 @@ export function CreateContentModel({ open, onClose }) {
               background: "linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%)"
             }}
           >
-            <h2 className="text-xl font-semibold text-white">Add New Content</h2>
+            <h2 className="text-xl font-semibold text-white">Edit Content</h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white hover:bg-opacity-10"
@@ -172,60 +166,26 @@ export function CreateContentModel({ open, onClose }) {
 
           <div className="p-5">
             <div className="space-y-5">
-              <div>
-                <label className="block text-sm font-medium text-white mb-2">Content Type</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {Object.values(contentType).map((contentTypeValue) => (
-                    <Button
-                      key={contentTypeValue}
-                      text={contentTypeValue}
-                      variant={type === contentTypeValue ? "primary" : "outline"}
-                      onClick={() => setType(contentTypeValue)}
-                      fullWidth={true}
-                      size="small"
-                    />
-                  ))}
-                </div>
-              </div>
-
-{/* <div>
-  <label className="block text-sm font-medium text-white mb-2">Content Type</label>
-  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-    {Object.values(contentType).map((contentTypeValue) => (
-      <Button
-        key={contentTypeValue}
-        text={contentTypeValue}
-        variant={type === contentTypeValue ? "primary" : "outline"}
-        onClick={() => setType(contentTypeValue)}
-        fullWidth={true}
-        size="small"
-        className="truncate overflow-hidden text-ellipsis"
-      />
-    ))}
-  </div>
-</div> */}
-
-
-              {(type === "youtube" || type === "twitter" || type === "linkedin" || type === "instagram" || type == "randomLink") && (
+              {(content.type === "youtube" || content.type === "twitter" || content.type === "linkedin" || content.type === "instagram" || content.type === "randomLink") && (
                 <div>
                   <div className="space-y-4">
-                    <Input reference={titleRef} placeholder="Title" />
-                    <Input reference={linkRef} placeholder="Link" />
+                    <Input reference={titleRef} placeholder="Title" defaultValue={content.title} />
+                    <Input reference={linkRef} placeholder="Link" defaultValue={content.link} />
                   </div>
                   <div 
                     className="flex justify-end gap-3 pt-5 mt-5"
                     style={{ borderTop: "1px solid rgba(255, 255, 255, 0.08)" }}
                   >
                     <Button variant="outline" text="Cancel" onClick={onClose} fullWidth={false} />
-                    <Button variant="primary" text="Add Content" onClick={handleCreateContent} fullWidth={false} />
+                    <Button variant="primary" text="Update Content" onClick={handleUpdateLinkContent} fullWidth={false} />
                   </div>
                 </div>
               )}
 
-              {(type === "text" || type === "code") && (
+              {(content.type === "text" || content.type === "code") && (
                 <div>
                   <div className="space-y-4">
-                    <Input reference={titleRef} placeholder="Title" />
+                    <Input reference={titleRef} placeholder="Title" defaultValue={content.title} />
                     <div>
                       <label className="block text-sm font-medium text-white mb-2">Content</label>
                       <textarea
@@ -248,7 +208,7 @@ export function CreateContentModel({ open, onClose }) {
                     style={{ borderTop: "1px solid rgba(255, 255, 255, 0.08)" }}
                   >
                     <Button variant="outline" text="Cancel" onClick={onClose} fullWidth={false} />
-                    <Button variant="primary" text="Add Content" onClick={handleCreateTextOrCode} fullWidth={false} />
+                    <Button variant="primary" text="Update Content" onClick={handleUpdateTextOrCode} fullWidth={false} />
                   </div>
                 </div>
               )}
@@ -264,9 +224,16 @@ interface InputProps {
   placeholder: string
   reference: React.RefObject<HTMLInputElement>
   type?: string
+  defaultValue?: string
 }
 
-export function Input({ reference, placeholder, type = "text" }: InputProps) {
+export function Input({ reference, placeholder, type = "text", defaultValue = "" }: InputProps) {
+  useEffect(() => {
+    if (reference.current && defaultValue) {
+      reference.current.value = defaultValue
+    }
+  }, [reference, defaultValue])
+  
   return (
     <div className="w-full">
       <label className="block text-sm font-medium text-white mb-2">{placeholder}</label>
@@ -284,5 +251,3 @@ export function Input({ reference, placeholder, type = "text" }: InputProps) {
     </div>
   )
 }
-
-
