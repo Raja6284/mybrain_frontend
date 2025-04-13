@@ -9,6 +9,7 @@ import { Button } from "./Button"
 import { useRef, useState, useEffect } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "../../config"
+import { useActiveContent } from '../pages/contexts/activeContentContext';
 
 enum contentType {
   Youtube = "youtube",
@@ -29,6 +30,7 @@ export function CreateContentModel({ open, onClose }) {
   const modalRef = useRef<HTMLDivElement>(null)
   const [type, setType] = useState<contentType>()
   const [text, setText] = useState("")
+  // const {activeContent,setActiveContent} = useActiveContent()
 
   // Close modal when clicking outside
   useEffect(() => {
