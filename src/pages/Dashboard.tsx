@@ -1,7 +1,5 @@
 
 
-"use client"
-
 import { useEffect, useState } from "react"
 import { Button } from "../components/Button"
 import { PlusIcon } from "../components/icons/PlusIcon"
@@ -131,9 +129,15 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-8">
-              {contents.map((c) => (
+              {/* {contents.map((c) => (
                 <Card key={c._id} content={c} onDelete={refresh} />
-              ))}
+              ))} */}
+
+{[...contents].reverse().map((c) => (
+  <Card key={c._id} content={c} onDelete={refresh} />
+))}
+
+
             </div>
           )}
         </div>
