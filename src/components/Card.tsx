@@ -338,6 +338,18 @@ export default function Card({ content, onDelete, onUpdate }: CardProps) {
                   referrerPolicy="strict-origin-when-cross-origin"
                   allowFullScreen
                 ></iframe>
+
+<div className="text-sm mt-2 px-4">
+      <a
+        href={content.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-white hover:underline"
+      >
+        View on Youtube
+      </a>
+    </div>
+
               </div>
             )}
 
