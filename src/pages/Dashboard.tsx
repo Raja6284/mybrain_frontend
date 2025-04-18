@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "../components/Button"
 import { PlusIcon } from "../components/icons/PlusIcon"
-import { ShareIcon } from "../components/icons/ShareIcon"
+ import { ShareIcon } from "../components/icons/ShareIcon"
 import Card from "../components/Card"
 import { CreateContentModel } from "../components/CreateContentModel"
 import { Sidebar } from "../components/Sidebar"
@@ -11,14 +11,33 @@ import { useContent } from "./hooks/useContent"
 import axios from "axios"
 import { BACKEND_URL } from "../../config"
 import { TextIcon } from "../components/icons/TextIcon"
+import { useActiveContent } from "./contexts/activeContentContext"
 
 export default function Dashboard() {
   const [contentCreatePop, setContentCreatePop] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [loading, setLoading] = useState(true) // Loading state
   const { contents, refresh } = useContent()
+  const { activeContent } = useActiveContent()
+
+  // Map sidebar names to content types
+  const typeMap: Record<string, string> = {
+    'All': 'all',
+    'Tweets': 'twitter',
+    'Videos': 'youtube',
+    'Docs': 'document',
+    'Links': 'randomLink'
+  }
+
+  // Filter contents based on activeContent
+  const filteredContents =
+    activeContent === 'All'
+      ? contents
+      : contents.filter(c => c.type === typeMap[activeContent])
 
   useEffect(() => {
-    refresh()
+    setLoading(true)
+    Promise.resolve(refresh()).finally(() => setLoading(false))
   }, [contentCreatePop])
 
   // Close sidebar when clicking outside on mobile
@@ -119,25 +138,30 @@ export default function Dashboard() {
             <Button onClick={handleShareContent} variant="secondary" text="Share" startIcon={<ShareIcon />} />
           </div>
 
-          {contents.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-20 text-gray-400 bg-gray-900 rounded-lg border border-gray-800 mt-8">
+              <div className="flex justify-center mb-4">
+                <TextIcon className="w-12 h-12 text-gray-600 animate-spin" />
+              </div>
+              <p className="text-lg font-medium text-gray-300">Loading...</p>
+            </div>
+          ) : filteredContents.length === 0 ? (
             <div className="text-center py-20 text-gray-400 bg-gray-900 rounded-lg border border-gray-800 mt-8">
               <div className="flex justify-center mb-4">
                 <TextIcon className="w-12 h-12 text-gray-600" />
               </div>
-              <p className="text-lg font-medium text-gray-300">No content yet</p>
+              <p className="text-lg font-medium text-gray-300">
+                {activeContent === 'All'
+                  ? "No content yet"
+                  : `No ${activeContent.toLowerCase()} found`}
+              </p>
               <p className="mt-2">Click "Add Content" to get started!</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-8">
-              {/* {contents.map((c) => (
+              {[...filteredContents].reverse().map((c) => (
                 <Card key={c._id} content={c} onDelete={refresh} />
-              ))} */}
-
-{[...contents].reverse().map((c) => (
-  <Card key={c._id} content={c} onDelete={refresh} />
-))}
-
-
+              ))}
             </div>
           )}
         </div>
@@ -145,4 +169,3 @@ export default function Dashboard() {
     </div>
   )
 }
-
