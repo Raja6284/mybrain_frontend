@@ -1,7 +1,5 @@
 
 
-"use client"
-
 import { Input } from "../components/CreateContentModel"
 import { Button } from "../components/Button"
 import { GoogleIcon } from "../components/icons/GoogleIcon"
@@ -29,37 +27,13 @@ function Signin() {
 
       const jwt = response.data.token
       localStorage.setItem("token", jwt)
+     
       navigate("/dashboard")
     } catch (error) {
       console.error("Signin error:", error)
       alert("Invalid credentials. Please try again.")
     }
   }
-
-  // const responseGoogle = async (authResult) => {
-  //   try {
-  //     const code = authResult.code;
-  
-  //     const response = await axios.post(`${BACKEND_URL}/api/v1/google-signin`, {
-  //       code,
-  //     });
-  
-  //     const jwt = response.data.token;
-  //     localStorage.setItem("token", jwt);
-  //     navigate("/dashboard");
-  //   } catch (error) {
-  //     console.error("Google login error:", error);
-  //     alert("Google login failed. Please try again.");
-  //   }
-  // };
-  
-
-
-  // const googleLogin = useGoogleLogin({
-  //   onSuccess: responseGoogle,
-  //   onError: responseGoogle,
-  //   flow: 'auth-code',
-  // })
 
 
 

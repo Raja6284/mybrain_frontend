@@ -12,6 +12,7 @@ import axios from "axios"
 import { BACKEND_URL } from "../../config"
 import { TextIcon } from "../components/icons/TextIcon"
 import { useActiveContent } from "./contexts/activeContentContext"
+import { useUsername } from "./hooks/useUsername"
 
 export default function Dashboard() {
   const [contentCreatePop, setContentCreatePop] = useState(false)
@@ -43,6 +44,7 @@ export default function Dashboard() {
     RandomLink: "randomLink",
   }
   
+  const { username, loading: usernameLoading } = useUsername()
 
   // Filter contents based on activeContent
   const filteredContents =
@@ -141,7 +143,10 @@ export default function Dashboard() {
             }}
           />
 
-          <div className="flex flex-col sm:flex-row sm:justify-end gap-3 mb-8 mt-14 lg:mt-6">
+          {/* <div className="flex flex-col sm:flex-row sm:justify-end gap-3 mb-8 mt-14 lg:mt-6">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="font-semibold text-white text-lg break-all">@{username}</span>
+          </div>
             <Button
               onClick={() => {
                 setContentCreatePop(true)
@@ -151,7 +156,33 @@ export default function Dashboard() {
               startIcon={<PlusIcon />}
             />
             <Button onClick={handleShareContent} variant="secondary" text="Share" startIcon={<ShareIcon />} />
-          </div>
+          </div> */}
+
+
+<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 mt-14 lg:mt-6">
+  {/* Username always on the left, wraps on mobile */}
+  <span className="font-semibold text-white text-lg break-all">
+    {usernameLoading ? "Loading..." : `@${username}'s Brain`}
+  </span>
+  {/* Buttons stack on mobile, row on desktop */}
+  <div className="flex flex-col sm:flex-row gap-3">
+    
+    <Button
+      onClick={() => setContentCreatePop(true)}
+      variant="primary"
+      text="Add Content"
+      startIcon={<PlusIcon />}
+    />
+    <Button
+      onClick={handleShareContent}
+      variant="secondary"
+      text="Share"
+      startIcon={<ShareIcon />}
+    />
+  </div>
+</div>
+
+
 
           {loading ? (
             <div className="text-center py-20 text-gray-400 bg-gray-900 rounded-lg border border-gray-800 mt-8">

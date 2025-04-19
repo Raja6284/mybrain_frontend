@@ -75,7 +75,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     `}>
       {/* Logo */}
       <div className="flex items-center justify-center mt-4 mb-8">
-        <TagIcon className="w-8 h-8 text-white" />
+      <div className="text-2xl font-bold tracking-tight text-white">ONEBRAIN</div>
       </div>
       {/* Menu */}
       <nav className="flex flex-col gap-1 px-2">
@@ -90,7 +90,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         ))}
       </nav>
       {/* Bottom Section */}
-      <div className="mt-3 px-2 w-full flex flex-col items-center">
+      <div className="mt-3 px-2 gap-0.5  w-full flex flex-col items-center">
         <Button
           onClick={() => setContentCreatePop(true)}
           variant="primary"
@@ -111,7 +111,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               localStorage.removeItem("token");
               window.location.href = "/signin";
             }}
-            className="w-full py-2 rounded-full bg-gray-300 cursor-pointer text-black font-bold text-lg hover:bg-gray-200 transition"
+            className="w-full py-2 rounded-full bg-gray-900 cursor-pointer text-black font-bold text-lg hover:bg-gray-200 transition"
           >
             Sign Out
           </button>
