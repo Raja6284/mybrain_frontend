@@ -52,7 +52,7 @@
 
 // export default function Card({ content, onDelete, onUpdate }: CardProps) {
 //   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  
+
 //   let youtubevidId = ""
 //   let instaLink = ""
 
@@ -190,7 +190,7 @@
 //           )}
 //         </div>
 //       </div>
-      
+
 //       {/* Edit Modal */}
 //       <EditContentModal 
 //         open={isEditModalOpen} 
@@ -224,16 +224,16 @@ interface Content {
   _id: string
   link: string
   type:
-    | "youtube"
-    | "twitter"
-    | "linkedin"
-    | "instagram"
-    | "document"
-    | "text"
-    | "image"
-    | "code"
-    | "email"
-    | "randomLink"
+  | "youtube"
+  | "twitter"
+  | "linkedin"
+  | "instagram"
+  | "document"
+  | "text"
+  | "image"
+  | "code"
+  | "email"
+  | "randomLink"
   title: string
   text?: string
   imageUrl?: string
@@ -339,16 +339,16 @@ export default function Card({ content, onDelete, onUpdate }: CardProps) {
                   allowFullScreen
                 ></iframe>
 
-<div className="text-sm mt-2 px-4">
-      <a
-        href={content.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-white hover:underline"
-      >
-        View on Youtube
-      </a>
-    </div>
+                <div className="text-sm mt-2 px-4">
+                  <a
+                    href={content.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:underline"
+                  >
+                    View on Youtube
+                  </a>
+                </div>
 
               </div>
             )}
@@ -369,33 +369,33 @@ export default function Card({ content, onDelete, onUpdate }: CardProps) {
             )} */}
 
 
-{content.type === "instagram" && (
-  <div className="p-0 bg-black text-white w-full overflow-hidden">
-    <div className="w-full max-w-full">
-      <blockquote
-        className="instagram-media w-full m-0 p-0"
-        data-instgrm-permalink={instaLink}
-        data-instgrm-version="14"
-        style={{
-          width: '100%',
-          margin: 0,
-          padding: 0,
-          border: 'none',
-        }}
-      ></blockquote>
-    </div>
-    <div className="text-sm mt-2 px-4">
-      <a
-        href={content.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-white hover:underline"
-      >
-        View on Instagram
-      </a>
-    </div>
-  </div>
-)}
+            {content.type === "instagram" && (
+              <div className="p-0 bg-black text-white w-full overflow-hidden">
+                <div className="w-full max-w-full">
+                  <blockquote
+                    className="instagram-media w-full m-0 p-0"
+                    data-instgrm-permalink={instaLink}
+                    data-instgrm-version="14"
+                    style={{
+                      width: '100%',
+                      margin: 0,
+                      padding: 0,
+                      border: 'none',
+                    }}
+                  ></blockquote>
+                </div>
+                <div className="text-sm mt-2 px-4">
+                  <a
+                    href={content.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:underline"
+                  >
+                    View on Instagram
+                  </a>
+                </div>
+              </div>
+            )}
 
 
             {content.type === "twitter" && (

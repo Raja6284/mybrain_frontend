@@ -21,13 +21,28 @@ export default function Dashboard() {
   const { activeContent } = useActiveContent()
 
   // Map sidebar names to content types
+  // const typeMap: Record<string, string> = {
+  //   'All': 'all',
+  //   'Tweets': 'twitter',
+  //   'Videos': 'youtube',
+  //   'Docs': 'document',
+  //   'Links': 'randomLink'
+  // }
+
   const typeMap: Record<string, string> = {
-    'All': 'all',
-    'Tweets': 'twitter',
-    'Videos': 'youtube',
-    'Docs': 'document',
-    'Links': 'randomLink'
+    All: "all",
+    Youtube: "youtube",
+    Twitter: "twitter",
+    LinkedIn: "linkedin",
+    Instagram: "instagram",
+    Document: "document",
+    Text: "text",
+    Image: "image",
+    Code: "code",
+    Email: "email",
+    RandomLink: "randomLink",
   }
+  
 
   // Filter contents based on activeContent
   const filteredContents =

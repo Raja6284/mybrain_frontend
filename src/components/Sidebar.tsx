@@ -1,134 +1,7 @@
 
-// import { type ReactElement, useState } from "react"
-// import { TwitterIcon } from "./icons/TwitterIcon"
-// import { YoutubeIcon } from "./icons/YoutubeIcon"
-// import { DocumentIcon } from "./icons/DocumentIcon"
-// import { LinkIcon } from "./icons/LinkIcon"
-// import { TagIcon } from "./icons/TagIcon"
-// import { Button } from "../components/Button"
-// import { PlusIcon } from "../components/icons/PlusIcon"
-// import { ShareIcon } from "../components/icons/ShareIcon"
-// import axios from "axios"
-// import { BACKEND_URL } from "../../config"
-// import { CreateContentModel } from "./CreateContentModel"
-
-
-// interface SidebarProps {
-//   isOpen: boolean
-//   onClose: () => void
-// }
-
-// export function Sidebar({ isOpen, onClose }: SidebarProps) {
-//   const [activeItem, setActiveItem] = useState("All")
-//   const [contentCreatePop, setContentCreatePop] = useState(false)
-
-//   const handleItemClick = (item: string) => {
-//     setActiveItem(item)
-//     if (window.innerWidth < 1024) {
-//       onClose()
-//     }
-//   }
-
-//   async function handleShareContent() {
-//     try {
-//       const response = await axios.post(
-//         `${BACKEND_URL}/api/v1/brain/share`,
-//         {
-//           share: true,
-//         },
-//         {
-//           headers: {
-//             Authorization: localStorage.getItem("token"),
-//           },
-//         },
-//       )
-
-//       const shareUrl = `${BACKEND_URL}/api/v1/brain/${response.data.hash}`
-//       window.navigator.clipboard.writeText(shareUrl)
-//       alert("Share URL copied to clipboard!")
-//     } catch (error) {
-//       console.error("Error sharing content:", error)
-//       alert("Failed to generate share link")
-//     }
-//   }
-
-//   return (
-//     <div className={`
-//       min-h-screen bg-black w-64 fixed top-0 left-0 flex flex-col shadow-xl z-30 transition-all duration-300
-//       border-r border-gray-800 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}
-//     `}>
-//       <div className="p-6 flex flex-col h-full">
-//         <div className="flex justify-between items-center pt-2 lg:hidden">
-//           <div className="text-2xl font-bold tracking-tight text-white">ONEBRAIN</div>
-//           <button
-//             onClick={onClose}
-//             className="p-2 text-gray-400 hover:text-white rounded-full hover:bg-gray-900"
-//             aria-label="Close sidebar"
-//           >
-//             ✕
-//           </button>
-//         </div>
-
-//         <div className="hidden lg:flex pt-2 text-2xl font-bold tracking-tight text-white">ONEBRAIN</div>
-
-//         <div className="pt-10 space-y-1.5 flex-grow">
-//           <SidebarElement logo={<TagIcon />} name="All" isActive={activeItem === "All"} onClick={() => handleItemClick("All")} />
-//           <SidebarElement logo={<TwitterIcon />} name="Tweets" isActive={activeItem === "Tweets"} onClick={() => handleItemClick("Tweets")} />
-//           <SidebarElement logo={<YoutubeIcon />} name="Videos" isActive={activeItem === "Videos"} onClick={() => handleItemClick("Videos")} />
-//           <SidebarElement logo={<DocumentIcon />} name="Docs" isActive={activeItem === "Docs"} onClick={() => handleItemClick("Docs")} />
-//           <SidebarElement logo={<LinkIcon />} name="Links" isActive={activeItem === "Links"} onClick={() => handleItemClick("Links")} />
-//         </div>
-
-//         <div className="p-4 flex flex-col gap-3 items-center">
-//           <Button onClick={() => setContentCreatePop(true)} variant="primary" text="Add Content" startIcon={<PlusIcon />} />
-//           <Button onClick={handleShareContent} variant="secondary" text="Share" startIcon={<ShareIcon />} />
-//         </div>
-
-//         <div className="mt-auto pb-4">
-//           <div className="border-t border-gray-800 pt-4 mt-4">
-//             <button
-//               onClick={() => {
-//                 localStorage.removeItem("token")
-//                 window.location.href = "/signin"
-//               }}
-//               className="w-full py-2 text-center text-gray-300 rounded hover:bg-gray-900 transition-colors"
-//             >
-//               Sign Out
-//             </button>
-//           </div>
-//         </div>
-
-//         <CreateContentModel open={contentCreatePop} onClose={() => setContentCreatePop(false)} />
-//       </div>
-//     </div>
-//   )
-// }
-
-// function SidebarElement({ logo, name, isActive = false, onClick }: SidebarElementProps) {
-//   return (
-//     <div
-//       onClick={onClick}
-//       className={`
-//         flex items-center py-3 px-4 rounded-md cursor-pointer transition-all
-//         ${isActive ? "bg-white text-black" : "hover:bg-gray-900 text-gray-400 hover:text-white"}
-//       `}
-//     >
-//       <div className="mr-3">{logo}</div>
-//       <div className="text-base font-medium">{name}</div>
-//     </div>
-//   )
-// }
-
-
-
-
-
-
-
 import { type ReactElement, useState } from "react";
 import { TwitterIcon } from "./icons/TwitterIcon";
 import { YoutubeIcon } from "./icons/YoutubeIcon";
-import { DocumentIcon } from "./icons/DocumentIcon";
 import { LinkIcon } from "./icons/LinkIcon";
 import { TagIcon } from "./icons/TagIcon";
 import { Button } from "../components/Button";
@@ -137,11 +10,34 @@ import { ShareIcon } from "../components/icons/ShareIcon";
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
 import { CreateContentModel } from "./CreateContentModel";
-import { useActiveContent } from "../pages/contexts/activeContentContext";// <-- Update the path
+import { useActiveContent } from "../pages/contexts/activeContentContext";
+import InstaIcon from "./icons/Instagram";
+import { TextIcon } from "./icons/TextIcon";
+import CodeIcon from "./icons/CodeIcon";
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+enum contentType {
+  All = "all",
+  Youtube = "youtube",
+  Twitter = "twitter",
+  Instagram = "instagram",
+  Text = "text",
+  Code = "code",
+  RandomLink = "randomLink",
+}
+
+const iconMap: Record<string, ReactElement> = {
+  all: <TagIcon />,
+  youtube: <YoutubeIcon />,
+  twitter: <TwitterIcon />,
+  instagram: <InstaIcon />,
+  text: <TextIcon />,
+  randomLink: <LinkIcon />,
+  code: <CodeIcon />
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
@@ -159,16 +55,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     try {
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/brain/share`,
-        {
-          share: true,
-        },
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        },
+        { share: true },
+        { headers: { Authorization: localStorage.getItem("token") } }
       );
-
       const shareUrl = `${BACKEND_URL}/api/v1/brain/${response.data.hash}`;
       window.navigator.clipboard.writeText(shareUrl);
       alert("Share URL copied to clipboard!");
@@ -176,54 +65,57 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       console.error("Error sharing content:", error);
       alert("Failed to generate share link");
     }
-  }
+  };
 
   return (
     <div className={`
-      min-h-screen bg-black w-64 fixed top-0 left-0 flex flex-col shadow-xl z-30 transition-all duration-300
-      border-r border-gray-800 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}
+      h-screen w-64 fixed top-0 left-0 flex flex-col bg-black z-30 border-r border-gray-800
+      transition-all duration-300 shadow-xl
+      ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
     `}>
-      <div className="p-6 flex flex-col h-full">
-        <div className="flex justify-between items-center pt-2 lg:hidden">
-          <div className="text-2xl font-bold tracking-tight text-white">ONEBRAIN</div>
+      {/* Logo */}
+      <div className="flex items-center justify-center mt-4 mb-8">
+        <TagIcon className="w-8 h-8 text-white" />
+      </div>
+      {/* Menu */}
+      <nav className="flex flex-col gap-1 px-2">
+        {Object.entries(contentType).map(([key, value]) => (
+          <SidebarElement
+            key={key}
+            logo={iconMap[value]}
+            name={key}
+            isActive={activeContent === key}
+            onClick={() => handleItemClick(key)}
+          />
+        ))}
+      </nav>
+      {/* Bottom Section */}
+      <div className="mt-3 px-2 w-full flex flex-col items-center">
+        <Button
+          onClick={() => setContentCreatePop(true)}
+          variant="primary"
+          text="Add Content"
+          startIcon={<PlusIcon />}
+          className="w-full py-2 rounded-full font-bold text-lg mb-2"
+        />
+        <Button
+          onClick={handleShareContent}
+          variant="secondary"
+          text="Share"
+          startIcon={<ShareIcon />}
+          className="w-full py-2 rounded-full font-bold text-lg mb-2"
+        />
+        <div className="w-full border-t border-gray-800 mt-2 pt-2">
           <button
-            onClick={onClose}
-            className="p-2 text-gray-400 hover:text-white rounded-full hover:bg-gray-900"
-            aria-label="Close sidebar"
+            onClick={() => {
+              localStorage.removeItem("token");
+              window.location.href = "/signin";
+            }}
+            className="w-full py-2 rounded-full bg-gray-300 cursor-pointer text-black font-bold text-lg hover:bg-gray-200 transition"
           >
-            ✕
+            Sign Out
           </button>
         </div>
-
-        <div className="hidden lg:flex pt-2 text-2xl font-bold tracking-tight text-white">ONEBRAIN</div>
-
-        <div className="pt-10 space-y-1.5 flex-grow">
-          <SidebarElement logo={<TagIcon />} name="All" isActive={activeContent === "All"} onClick={() => handleItemClick("All")} />
-          <SidebarElement logo={<TwitterIcon />} name="Tweets" isActive={activeContent === "Tweets"} onClick={() => handleItemClick("Tweets")} />
-          <SidebarElement logo={<YoutubeIcon />} name="Videos" isActive={activeContent === "Videos"} onClick={() => handleItemClick("Videos")} />
-          <SidebarElement logo={<DocumentIcon />} name="Docs" isActive={activeContent === "Docs"} onClick={() => handleItemClick("Docs")} />
-          <SidebarElement logo={<LinkIcon />} name="Links" isActive={activeContent === "Links"} onClick={() => handleItemClick("Links")} />
-        </div>
-
-        <div className="p-4 flex flex-col gap-3 items-center">
-          <Button onClick={() => setContentCreatePop(true)} variant="primary" text="Add Content" startIcon={<PlusIcon />} />
-          <Button onClick={handleShareContent} variant="secondary" text="Share" startIcon={<ShareIcon />} />
-        </div>
-
-        <div className="mt-auto pb-4">
-          <div className="border-t border-gray-800 pt-4 mt-4">
-            <button
-              onClick={() => {
-                localStorage.removeItem("token");
-                window.location.href = "/signin";
-              }}
-              className="w-full py-2 text-center text-gray-300 rounded hover:bg-gray-900 transition-colors"
-            >
-              Sign Out
-            </button>
-          </div>
-        </div>
-
         <CreateContentModel open={contentCreatePop} onClose={() => setContentCreatePop(false)} />
       </div>
     </div>
@@ -242,13 +134,13 @@ function SidebarElement({ logo, name, isActive = false, onClick }: SidebarElemen
     <div
       onClick={onClick}
       className={`
-        flex items-center py-3 px-4 rounded-md cursor-pointer transition-all
-        ${isActive ? "bg-white text-black" : "hover:bg-gray-900 text-gray-400 hover:text-white"}
+        flex items-center gap-4 px-6 py-2 rounded-full cursor-pointer transition
+        ${isActive ? "bg-gray-700 text-white" : "text-gray-200 hover:bg-gray-900"}
+        text-lg
       `}
     >
-      <div className="mr-3">{logo}</div>
-      <div className="text-base font-medium">{name}</div>
+      <span className="w-6 h-6">{logo}</span>
+      <span>{name}</span>
     </div>
   );
 }
-
