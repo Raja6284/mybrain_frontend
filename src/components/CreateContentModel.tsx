@@ -1,7 +1,5 @@
 
 
-"use client"
-
 import type React from "react"
 
 import { CrossIcon } from "./icons/CrossIcon"
@@ -9,7 +7,8 @@ import { Button } from "./Button"
 import { useRef, useState, useEffect } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "../../config"
-import { useActiveContent } from '../pages/contexts/activeContentContext';
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 enum contentType {
   Youtube = "youtube",
@@ -69,7 +68,8 @@ export function CreateContentModel({ open, onClose }) {
     const link = linkRef.current?.value
 
     if (!title || !link) {
-      alert("Please fill in all fields")
+      //alert("Please fill in all fields")
+      toast.error("Please fill in all fields")
       return
     }
 
@@ -89,10 +89,12 @@ export function CreateContentModel({ open, onClose }) {
       )
 
       onClose()
-      alert("Your content was added successfully")
+      //alert("Your content was added successfully")
+      toast.success("Your content was added successfully")
     } catch (error) {
       console.error("Error adding content:", error)
-      alert("Failed to add content. Please try again.")
+      //alert("Failed to add content. Please try again.")
+      toast.error("Failed to add content. Please try again.")
     }
   }
 
@@ -100,7 +102,7 @@ export function CreateContentModel({ open, onClose }) {
     const title = titleRef.current?.value
 
     if (!title || !text.trim()) {
-      alert("Please fill in all fields")
+      toast.error("Please fill in all fields")
       return
     }
 
@@ -120,10 +122,10 @@ export function CreateContentModel({ open, onClose }) {
       )
 
       onClose()
-      alert("Your content was added successfully")
+      toast.success("Your content was added successfully")
     } catch (error) {
       console.error("Error adding content:", error)
-      alert("Failed to add content. Please try again.")
+      toast.error("Failed to add content. Please try again.")
     }
   }
 
@@ -131,6 +133,7 @@ export function CreateContentModel({ open, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50">
+      <ToastContainer position="top-center" />
       <div className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm"></div>
 
       <div className="fixed inset-0 flex items-center justify-center p-4">
