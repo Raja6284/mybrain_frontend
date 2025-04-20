@@ -22,12 +22,14 @@ interface SidebarProps {
 
 enum contentType {
   All = "all",
+  RandomLink = "randomLink",
+  Text = "text",
+  Code = "code",
   Youtube = "youtube",
   Twitter = "twitter",
   Instagram = "instagram",
-  Text = "text",
-  Code = "code",
-  RandomLink = "randomLink",
+
+  
 }
 
 const iconMap: Record<string, ReactElement> = {

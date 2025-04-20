@@ -11,16 +11,17 @@ import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 enum contentType {
-  Youtube = "youtube",
-  Twitter = "twitter",
-  LinkedIn = "linkedin",
-  Instagram = "instagram",
-  Document = "document",
-  Text = "text",
-  Image = "image",
-  Code = "code",
-  Email = "email",
   RandomLink = "randomLink",
+  Code = "code",
+  Youtube = "youtube",
+  Text = "text",
+  Twitter = "twitter",
+  //LinkedIn = "linkedin",
+  Instagram = "instagram",
+  //Document = "document",
+  //Image = "image",
+  //Email = "email",
+  
 }
 
 export function CreateContentModel({ open, onClose }) {
