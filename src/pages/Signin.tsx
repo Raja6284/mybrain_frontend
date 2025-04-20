@@ -1,5 +1,4 @@
 
-
 import { Input } from "../components/CreateContentModel"
 import { Button } from "../components/Button"
 import { GoogleIcon } from "../components/icons/GoogleIcon"
@@ -8,7 +7,9 @@ import { BACKEND_URL } from "../../config"
 import { use, useRef } from "react"
 import axios from "axios"
 import { useGoogleLogin } from '@react-oauth/google';
-import { GoogleLogin } from "@react-oauth/google"
+
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function Signin() {
   const usernameRef = useRef<HTMLInputElement>(null)
@@ -55,12 +56,13 @@ function Signin() {
         navigate("/dashboard");
       } catch (error) {
         console.error("Google login error:", error);
-        alert("Google login failed. Please try again.");
+        //alert("Google login failed. Please try again.");
+        toast.error("Google login failed. Please try again.")
       }
     },
     onError: (error) => {
       console.error("Google login error:", error);
-      alert("Google login failed. Please try again.");
+      toast.error("Google login failed. Please try again.")
     },
     flow: 'auth-code',
     // Add the redirect URL - must match what's configured in Google Cloud Console
@@ -70,6 +72,7 @@ function Signin() {
 
   return (
     <div className="w-full min-h-screen fixed top-0 left-0 bg-black flex justify-center items-center p-4">
+      <ToastContainer position="top-center" />
       <div className="w-full max-w-sm rounded-lg shadow-lg p-6 flex flex-col items-center border border-gray-800">
         <div className="text-2xl font-bold tracking-tight text-white">OneBrain</div>
 
