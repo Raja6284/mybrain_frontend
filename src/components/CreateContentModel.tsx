@@ -169,7 +169,7 @@ export function CreateContentModel({ open, onClose }) {
             <h2 className="text-xl font-semibold text-white">Add New Content</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white hover:bg-opacity-10"
+              className="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-600 hover:bg-opacity-10"
               aria-label="Close modal"
             >
               <CrossIcon />
