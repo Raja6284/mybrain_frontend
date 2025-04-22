@@ -14,9 +14,17 @@ function App() {
     children: React.ReactNode;
   };
 
-  const PrivateRoute = ({ children }:PrivateRouteProps) => {
-    const token = localStorage.getItem("token");
-    return token ? <Navigate to="/dashboard" /> : children;
+  // const PrivateRoute = ({ children }:PrivateRouteProps) => {
+  //   const token = localStorage.getItem("token");
+  //   return token ? <Navigate to="/dashboard" /> : children;
+  // };
+
+
+  // PrivateRoute: Protects routes that require authentication
+  const PrivateRoute = ({ children }: PrivateRouteProps) => {
+    const token = localStorage.getItem('token');
+    // If the user is not authenticated, redirect to /signin
+    return token ? <>{children}</> : <Navigate to="/signin" />;
   };
 
   return(
@@ -25,6 +33,7 @@ function App() {
         <ActiveContentProvider>
       <Routes>
         <Route path='/' element={<Signup/>} />
+        <Route path='/signup' element={<Signup/>} />
         {/* <Route path='/signin' element={<Signin/>} /> */}
         <Route path="/signin" element={<PrivateRoute><Signin /></PrivateRoute>} />
         <Route path='/dashboard' element={<Dashboard/>} />
