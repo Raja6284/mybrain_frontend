@@ -24,7 +24,12 @@ enum contentType {
   
 }
 
-export function CreateContentModel({ open, onClose }) {
+interface CreateContentModelProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export function CreateContentModel({ open, onClose } : CreateContentModelProps) {
   const titleRef = useRef<HTMLInputElement>(null)
   const linkRef = useRef<HTMLInputElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
@@ -212,7 +217,7 @@ export function CreateContentModel({ open, onClose }) {
 </div> */}
 
 
-              {(type === "youtube" || type === "twitter" || type === "linkedin" || type === "instagram" || type == "randomLink") && (
+              {(type === "youtube" || type === "twitter" ||  type === "instagram" || type == "randomLink") && (
                 <div>
                   <div className="space-y-4">
                     <Input reference={titleRef} placeholder="Title" />

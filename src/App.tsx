@@ -10,7 +10,11 @@ import { ActiveContentProvider } from './pages/contexts/activeContentContext.tsx
 
 function App() {
 
-  const PrivateRoute = ({ children }) => {
+  type PrivateRouteProps = {
+    children: React.ReactNode;
+  };
+
+  const PrivateRoute = ({ children }:PrivateRouteProps) => {
     const token = localStorage.getItem("token");
     return token ? <Navigate to="/dashboard" /> : children;
   };
