@@ -47,7 +47,7 @@ function App() {
         {/* <Route path='/signin' element={<Signin/>} /> */}
         {/* <Route path="/signin" element={<PrivateRoute><Signin /></PrivateRoute>} /> */}
         <Route path="/signin" element={<ProtectedSigninRoute />} />
-        <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
       </Routes>
       </ActiveContentProvider>
          </GoogleOAuthProvider>
