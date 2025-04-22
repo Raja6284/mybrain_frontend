@@ -59,7 +59,7 @@ export default function Dashboard() {
 
   // Close sidebar when clicking outside on mobile
   useEffect(() => {
-    function handleClickOutside(event) {
+    function handleClickOutside(event:MouseEvent) {
       if (sidebarOpen && window.innerWidth < 1024) {
         // Check if click is outside sidebar
         const sidebarElement = document.querySelector(".sidebar")
@@ -67,9 +67,9 @@ export default function Dashboard() {
 
         if (
           sidebarElement &&
-          !sidebarElement.contains(event.target) &&
+          !sidebarElement.contains(event.target as Node ) &&
           hamburgerButton &&
-          !hamburgerButton.contains(event.target)
+          !hamburgerButton.contains(event.target as Node)
         ) {
           setSidebarOpen(false)
         }
@@ -187,14 +187,14 @@ export default function Dashboard() {
           {loading ? (
             <div className="text-center py-20 text-gray-400 bg-gray-900 rounded-lg border border-gray-800 mt-8">
               <div className="flex justify-center mb-4">
-                <TextIcon className="w-12 h-12 text-gray-600 animate-spin" />
+                <TextIcon  />
               </div>
               <p className="text-lg font-medium text-gray-300">Loading...</p>
             </div>
           ) : filteredContents.length === 0 ? (
             <div className="text-center py-20 text-gray-400 bg-gray-900 rounded-lg border border-gray-800 mt-8">
               <div className="flex justify-center mb-4">
-                <TextIcon className="w-12 h-12 text-gray-600" />
+                <TextIcon />
               </div>
               <p className="text-lg font-medium text-gray-300">
                 {activeContent === 'All'

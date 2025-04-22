@@ -39,8 +39,8 @@ export function CreateContentModel({ open, onClose } : CreateContentModelProps) 
 
   // Close modal when clicking outside
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+    function handleClickOutside(event:MouseEvent) {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
         onClose()
       }
     }
@@ -55,7 +55,7 @@ export function CreateContentModel({ open, onClose } : CreateContentModelProps) 
 
   // Handle ESC key press
   useEffect(() => {
-    function handleEscKey(event) {
+    function handleEscKey(event : KeyboardEvent) {
       if (event.key === "Escape") {
         onClose()
       }
@@ -143,14 +143,26 @@ export function CreateContentModel({ open, onClose } : CreateContentModelProps) 
       <div className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm"></div>
 
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <style jsx>{`
+        {/* <style jsx>{`
           div::-webkit-scrollbar {
             display: none;
           }
           textarea::-webkit-scrollbar {
             display: none;
           }
-        `}</style>
+        `}</style> */}
+
+<style>
+  {`
+    div::-webkit-scrollbar {
+      display: none;
+    }
+    textarea::-webkit-scrollbar {
+      display: none;
+    }
+  `}
+</style>
+
         
         <div
           ref={modalRef}
@@ -271,10 +283,17 @@ export function CreateContentModel({ open, onClose } : CreateContentModelProps) 
   )
 }
 
+// interface InputProps {
+//   placeholder: string
+//   reference: React.RefObject<HTMLInputElement>
+//   type?: string
+// }
+
+
 interface InputProps {
-  placeholder: string
-  reference: React.RefObject<HTMLInputElement>
-  type?: string
+  placeholder: string;
+  reference: React.RefObject<HTMLInputElement | null>; // allow null here
+  type?: string;
 }
 
 export function Input({ reference, placeholder, type = "text" }: InputProps) {

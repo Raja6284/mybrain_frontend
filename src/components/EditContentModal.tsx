@@ -7,9 +7,25 @@ import { Button } from "./Button"
 import { useRef, useState, useEffect } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "../../config"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
+interface EditContentModalProps {
+  open: boolean
+  onClose: () => void
+  content: {
+    _id: string
+    type: string
+    title: string
+    link?: string
+    text?: string
+  }
+  onUpdate: (updated: any) => void
+}
 
 
-export function EditContentModal({ open, onClose, content, onUpdate }) {
+
+export function EditContentModal({ open, onClose, content, onUpdate }:EditContentModalProps) {
   const titleRef = useRef<HTMLInputElement>(null)
   const linkRef = useRef<HTMLInputElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
@@ -26,8 +42,8 @@ export function EditContentModal({ open, onClose, content, onUpdate }) {
 
   // Close modal when clicking outside
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+    function handleClickOutside(event:MouseEvent) {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
         onClose()
       }
     }
@@ -42,7 +58,7 @@ export function EditContentModal({ open, onClose, content, onUpdate }) {
 
   // Handle ESC key press
   useEffect(() => {
-    function handleEscKey(event) {
+    function handleEscKey(event:KeyboardEvent) {
       if (event.key === "Escape") {
         onClose()
       }
@@ -61,7 +77,7 @@ export function EditContentModal({ open, onClose, content, onUpdate }) {
     const link = linkRef.current?.value
 
     if (!title || !link) {
-      alert("Please fill in all fields")
+      toast.error("Please fill in all fields")
       return
     }
 
@@ -81,10 +97,10 @@ export function EditContentModal({ open, onClose, content, onUpdate }) {
 
       onClose()
       onUpdate(response.data)
-      alert("Your content was updated successfully")
+      toast.success("Your content was updated successfully")
     } catch (error) {
       console.error("Error updating content:", error)
-      alert("Failed to update content. Please try again.")
+      toast.error("Failed to update content. Please try again.")  
     }
   }
 
@@ -92,7 +108,7 @@ export function EditContentModal({ open, onClose, content, onUpdate }) {
     const title = titleRef.current?.value
 
     if (!title || !text.trim()) {
-      alert("Please fill in all fields")
+      toast.error("Please fill in all fields")
       return
     }
 
@@ -112,10 +128,10 @@ export function EditContentModal({ open, onClose, content, onUpdate }) {
 
       onClose()
       onUpdate(response.data)
-      alert("Your content was updated successfully")
+      toast.success("Your content was updated successfully")  
     } catch (error) {
       console.error("Error updating content:", error)
-      alert("Failed to update content. Please try again.")
+      toast.error("Failed to update content. Please try again.")  
     }
   }
 
@@ -123,10 +139,11 @@ export function EditContentModal({ open, onClose, content, onUpdate }) {
 
   return (
     <div className="fixed inset-0 z-50">
+      <ToastContainer position="top-center" />
       <div className="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm"></div>
 
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <style jsx>{`
+        <style>{`
           div::-webkit-scrollbar {
             display: none;
           }
@@ -220,12 +237,22 @@ export function EditContentModal({ open, onClose, content, onUpdate }) {
   )
 }
 
+// interface InputProps {
+//   placeholder: string
+//   reference: React.RefObject<HTMLInputElement>
+//   type?: string
+//   defaultValue?: string
+// }
+
 interface InputProps {
   placeholder: string
-  reference: React.RefObject<HTMLInputElement>
+  reference: React.RefObject<HTMLInputElement | null>  // ✅ allow null
   type?: string
   defaultValue?: string
 }
+
+
+
 
 export function Input({ reference, placeholder, type = "text", defaultValue = "" }: InputProps) {
   useEffect(() => {

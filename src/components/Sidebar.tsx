@@ -98,14 +98,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           variant="primary"
           text="Add Content"
           startIcon={<PlusIcon />}
-          className="w-full py-2 rounded-full font-bold text-lg mb-2"
+          // className="w-full py-2 rounded-full font-bold text-lg mb-2"
         />
         <Button
           onClick={handleShareContent}
           variant="secondary"
           text="Share"
           startIcon={<ShareIcon />}
-          className="w-full py-2 rounded-full font-bold text-lg mb-2"
+          // className="w-full py-2 rounded-full font-bold text-lg mb-2"
         />
         <div className="w-full border-t border-gray-800 mt-2 pt-2">
           <button
