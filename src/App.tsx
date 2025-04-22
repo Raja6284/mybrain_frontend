@@ -27,6 +27,16 @@ function App() {
     return token ? <>{children}</> : <Navigate to="/signin" />;
   };
 
+
+  const ProtectedSigninRoute = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // If already logged in, redirect to /dashboard
+      return <Navigate to="/dashboard" />;
+    }
+    return <Signin />;
+  };
+
   return(
     <div>
       <GoogleOAuthProvider clientId="661825278445-ob1q03ef5k4km1qg98civdqhftopsrk5.apps.googleusercontent.com">
@@ -35,7 +45,8 @@ function App() {
         <Route path='/' element={<Signup/>} />
         <Route path='/signup' element={<Signup/>} />
         {/* <Route path='/signin' element={<Signin/>} /> */}
-        <Route path="/signin" element={<PrivateRoute><Signin /></PrivateRoute>} />
+        {/* <Route path="/signin" element={<PrivateRoute><Signin /></PrivateRoute>} /> */}
+        <Route path="/signin" element={<ProtectedSigninRoute />} />
         <Route path='/dashboard' element={<Dashboard/>} />
       </Routes>
       </ActiveContentProvider>
