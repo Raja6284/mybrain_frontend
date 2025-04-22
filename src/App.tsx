@@ -6,7 +6,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import { Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ActiveContentProvider } from './pages/contexts/activeContentContext.tsx';
-import { GOOGLE_CLIENT_ID } from '../config.ts';
+
 
 function App() {
 
@@ -17,7 +17,7 @@ function App() {
 
   return(
     <div>
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <GoogleOAuthProvider clientId="661825278445-ob1q03ef5k4km1qg98civdqhftopsrk5.apps.googleusercontent.com">
         <ActiveContentProvider>
       <Routes>
         <Route path='/' element={<Signup/>} />
