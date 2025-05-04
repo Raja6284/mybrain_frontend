@@ -32,7 +32,8 @@ function Signin() {
       navigate("/dashboard")
     } catch (error) {
       console.error("Signin error:", error)
-      alert("Invalid credentials. Please try again.")
+      //alert("Invalid credentials. Please try again.")
+      toast.error("Invalid credentials. Please try again.")
     }
   }
 
