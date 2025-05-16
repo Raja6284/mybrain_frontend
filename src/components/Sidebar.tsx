@@ -111,7 +111,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           <button
             onClick={() => {
               localStorage.removeItem("token");
-              window.location.href = "/signin";
+              window.location.href = "/";
             }}
             className="w-full py-2 rounded-full bg-gray-900 cursor-pointer text-black font-bold text-lg hover:bg-gray-200 transition"
           >

@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import { Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ActiveContentProvider } from './pages/contexts/activeContentContext.tsx';
-
+import LandingPage from './pages/Home.tsx'
 
 function App() {
 
@@ -34,9 +34,10 @@ function App() {
       <GoogleOAuthProvider clientId="661825278445-ob1q03ef5k4km1qg98civdqhftopsrk5.apps.googleusercontent.com">
         <ActiveContentProvider>
           <Routes>
-            <Route path='/' element={<AuthRoute><Signup /></AuthRoute>} />
+            <Route path='/' element={<AuthRoute><LandingPage /></AuthRoute>} />
             <Route path='/signup' element={<AuthRoute><Signup /></AuthRoute>} />
             <Route path='/signin' element={<AuthRoute><Signin /></AuthRoute>} />
+            <Route path='/home' element={<AuthRoute><LandingPage /></AuthRoute>} />
             <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           </Routes>
         </ActiveContentProvider>
