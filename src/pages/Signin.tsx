@@ -109,7 +109,7 @@ function Signin() {
 
         <div className="mt-4 flex text-sm">
           <div className="text-gray-500">Don't have an account?</div>
-          <Link to="/" className="ml-1 text-white font-medium hover:text-gray-300">Sign up</Link>
+          <Link to="/signup" className="ml-1 text-white font-medium hover:text-gray-300">Sign up</Link>
         </div>
       </div>
     </div>
