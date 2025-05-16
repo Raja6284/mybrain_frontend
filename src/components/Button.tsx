@@ -69,6 +69,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   size?: "small" | "medium" | "large";
   disabled?: boolean;
+  className?: string; // Optional className prop
 }
 
 const colorVariant = {
@@ -91,6 +92,7 @@ export function Button({
   fullWidth = false,
   size = "medium",
   disabled = false,
+  className = "", // Default to an empty string if not provided
 }: ButtonProps) {
   const baseClasses =
     "rounded-md font-medium flex items-center justify-center transition-all duration-200 ease-in-out";
@@ -103,6 +105,7 @@ export function Button({
         ${colorVariant[variant]} 
         ${sizeVariant[size]}
         ${baseClasses}
+        ${className}
         ${fullWidth ? "w-full" : "w-auto"}
         ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
         break-words whitespace-normal text-center

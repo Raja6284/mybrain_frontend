@@ -294,9 +294,10 @@ interface InputProps {
   placeholder: string;
   reference: React.RefObject<HTMLInputElement | null>; // allow null here
   type?: string;
+  className?: string;
 }
 
-export function Input({ reference, placeholder, type = "text" }: InputProps) {
+export function Input({ reference, placeholder, type = "text", className="" }: InputProps) {
   return (
     <div className="w-full">
       <label className="block text-sm font-medium text-white mb-2">{placeholder}</label>
@@ -304,7 +305,7 @@ export function Input({ reference, placeholder, type = "text" }: InputProps) {
         type={type}
         placeholder={`Enter ${placeholder.toLowerCase()}`}
         ref={reference}
-        className="w-full px-4 py-2.5 rounded-md bg-black text-white focus:outline-none transition-all"
+        className={`w-full px-4 py-2.5 rounded-md bg-black text-white focus:outline-none transition-all ${className}`}
         style={{ 
           border: "1px solid rgba(255, 255, 255, 0.15)",
           background: "rgba(0, 0, 0, 0.3)",
